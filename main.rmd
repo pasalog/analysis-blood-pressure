@@ -1,0 +1,414 @@
+---
+title: "STAT253 – Homework#1"
+author: Çağatay USLU - 150113030
+date: 21.03.2020
+output: word_document
+---
+
+### Initializing dataset from .csv
+
+
+```{r initializing dataset and libraries}
+library(DescTools)
+library(ggplot2)
+
+man <- 0
+woman <- 1
+datasetFile <- "data.csv"
+dataSet <- read.csv(datasetFile, header = TRUE, ";")
+men.sysbp <- dataSet[which(dataSet$GENDER == man),]['SYSBP'][, 1]
+men.diasbp <- dataSet[which(dataSet$GENDER == man),]['DIASBP'][, 1]
+women.sysbp <- dataSet[which(dataSet$GENDER == woman),]['SYSBP'][, 1]
+women.diasbp <- dataSet[which(dataSet$GENDER == woman),]['DIASBP'][, 1]
+
+```
+
+***
+
+### Answers
+
+*1 -* Four variables exist for each person individually. Except gender, all of others are quantitative variable. Gender is qualitative variable. It is characteristic variable on each person (experimental unit). Other variables; age, sysbp, diasbp are discrete quantitative variable. Because these are countable. Data is multivariate. More than two variables are measured on each person (experimental unit)
+
+*2 -* PASS
+
+*3 -* MEN SYSTOLIC BLOOD PRESSURE
+
+```{r MEN - SYSBP}
+men.sysbp <- dataSet[which(dataSet$GENDER == man),]['SYSBP'][, 1]
+men.sysbp.sorted <- sort(men.sysbp)
+men.sysbp.mean <- mean(men.sysbp)
+men.sysbp.most.frequent.value <- Mode(men.sysbp)
+men.sysbp.most.frequent.value.count <- length(dataSet[which(dataSet$SYSBP == men.sysbp.most.frequent.value),]['SYSBP'][, 1])
+men.sysbp.median <- median(men.sysbp)
+men.sysbp.max <- max(men.sysbp)
+men.sysbp.min <- min(men.sysbp)
+men.sysbp.sum <- sum(men.sysbp)
+men.sysbp.std <- sd(men.sysbp, na.rm = FALSE)
+men.sysbp.fiveNumbersSumy <- quantile(men.sysbp)
+men.sysbp.lowerQuartile <- men.sysbp.fiveNumbersSumy[2]
+men.sysbp.upperQuartile <- men.sysbp.fiveNumbersSumy[4]
+men.sysbp.interQuartile <- men.sysbp.upperQuartile - men.sysbp.lowerQuartile
+men.sysbp.variance <- men.sysbp.std^2
+men.sysbp.range <- men.sysbp.max - men.sysbp.min
+men.sysbp.range.over.std <- men.sysbp.range / men.sysbp.std
+men.sysbp.largest.zscore <- (men.sysbp.max - men.sysbp.mean) / men.sysbp.std
+men.sysbp.smallest.zscore <- (men.sysbp.min - men.sysbp.mean) / men.sysbp.std
+```
+
+Sorted: `r men.sysbp.sorted`
+
+Mean, 𝑥̅: `r men.sysbp.mean`
+
+Variance, s^2: `r men.sysbp.variance`
+
+Standard deviation, s: `r men.sysbp.std`
+
+Lower Quartile: `r sprintf("Lower Quartile: %d", men.sysbp.lowerQuartile)`
+
+Upper Quartile: `r sprintf("Upper Quartile: %d", men.sysbp.upperQuartile)`
+
+Min value: `r sprintf("Min value: %d", men.sysbp.min)`
+
+Max value: `r sprintf("Max value: %d", men.sysbp.max)`
+
+Range: `r men.sysbp.range`
+
+The range is approximately `r men.sysbp.range.over.std` standard deviations
+
+Median: `r men.sysbp.median`
+
+IQR: `r men.sysbp.interQuartile`
+
+Five-number summaries: `r men.sysbp.fiveNumbersSumy`
+
+### Box Plot
+
+### Stem Plot
+
+```{r echo=FALSE}
+stem(men.sysbp)
+```
+
+### Histograms
+
+```{r echo=FALSE}
+hist(men.sysbp, breaks = 5, col = "blue", density = 20, main = "5 Subinterval Histogram", labels = FALSE)
+```
+
+```{r echo=FALSE}
+hist(men.sysbp, breaks = 10, col = "green", density = 15, main = "10 Subinterval Histogram", labels = FALSE)
+```
+
+> Description
+
+### Dotplot
+
+```{r echo=FALSE}
+ggplot(data.frame(men.sysbp), aes(x = men.sysbp)) +
+  geom_dotplot(binaxis = 'x', stackdir = 'up', binwidth = length(men.sysbp) / men.sysbp.most.frequent.value.count - 1, method = "dotdensity") +
+  scale_y_continuous(name = NULL, breaks = NULL)
+```
+
+> The data is not mound shaped.
+
+***
+
+> We can not use the Tchebysheff’s Theorem to describe this data set. Because the set of measurement is skewed. The shape is skewed-right.
+
+> We can not use the Empirical Rule to describe this data set. Because it's not mound-shaped.
+
+> q.Construct
+
+> r.Construct
+
+## z-scores of largest and smallest observations
+
+> Smallest observation z-score: `r (men.sysbp.max - men.sysbp.mean) / men.sysbp.std`
+>
+> Largest observation z-score: `r (men.sysbp.max - men.sysbp.mean) / men.sysbp.std`
+
+*3 -* MEN DIASTOLIC BLOOD PRESSURE
+
+```{r MEN - DIASBP}
+men.diasbp.sorted <- sort(men.diasbp)
+men.diasbp.mean <- mean(men.diasbp)
+men.diasbp.most.frequent.value <- Mode(men.diasbp)
+men.diasbp.most.frequent.value.count <- length(dataSet[which(dataSet$DIASBP == men.diasbp.most.frequent.value),]['DIASBP'][, 1])
+men.diasbp.median <- median(men.diasbp)
+men.diasbp.max <- max(men.diasbp)
+men.diasbp.min <- min(men.diasbp)
+men.diasbp.sum <- sum(men.diasbp)
+men.diasbp.std <- sd(men.diasbp, na.rm = FALSE)
+men.diasbp.fiveNumbersSumy <- quantile(men.diasbp)
+men.diasbp.lowerQuartile <- men.diasbp.fiveNumbersSumy[2]
+men.diasbp.upperQuartile <- men.diasbp.fiveNumbersSumy[4]
+men.diasbp.interQuartile <- men.diasbp.upperQuartile - men.diasbp.lowerQuartile
+men.diasbp.variance <- men.diasbp.std^2
+men.diasbp.range <- men.diasbp.max - men.diasbp.min
+men.diasbp.range.over.std <- men.diasbp.range / men.diasbp.std
+men.diasbp.largest.zscore <- (men.diasbp.max - men.diasbp.mean) / men.diasbp.std
+men.diasbp.smallest.zscore <- (men.diasbp.min - men.diasbp.mean) / men.diasbp.std
+```
+
+Sorted: `r men.diasbp.sorted`
+
+Mean, 𝑥̅: `r men.diasbp.mean`
+
+Variance, s^2: `r men.diasbp.variance`
+
+Standard deviation, s: `r men.diasbp.std`
+
+Lower Quartile: `r sprintf("Lower Quartile: %f", men.diasbp.lowerQuartile)`
+
+Upper Quartile: `r sprintf("Upper Quartile: %f", men.diasbp.upperQuartile)`
+
+Min value: `r sprintf("Min value: %f", men.diasbp.min)`
+
+Max value: `r sprintf("Max value: %f", men.diasbp.max)`
+
+Range: `r men.diasbp.range`
+
+The range is approximately `r men.diasbp.range.over.std` standard deviations
+
+Median: `r men.diasbp.median`
+
+IQR: `r men.diasbp.interQuartile`
+
+Five-number summaries: `r men.diasbp.fiveNumbersSumy`
+
+### Box Plot
+
+### Stem Plot
+
+```{r echo=FALSE}
+stem(men.diasbp)
+```
+
+### Histograms
+
+```{r echo=FALSE}
+hist(men.diasbp, breaks = 5, col = "blue", density = 20, main = "5 Subinterval Histogram", labels = FALSE)
+```
+
+```{r echo=FALSE}
+hist(men.diasbp, breaks = 10, col = "green", density = 15, main = "10 Subinterval Histogram", labels = FALSE)
+```
+
+> Description
+
+### Dotplot
+
+```{r echo=FALSE}
+ggplot(data.frame(men.diasbp), aes(x = men.diasbp)) +
+  geom_dotplot(binaxis = 'x', stackdir = 'up', binwidth = length(men.diasbp) / men.diasbp.most.frequent.value.count - 1, method = "dotdensity") +
+  scale_y_continuous(name = NULL, breaks = NULL)
+```
+
+> The data is not mound shaped.
+
+***
+
+> We can not use the Tchebysheff’s Theorem to describe this data set. Because the set of measurement is skewed. The shape is skewed-right.
+
+> We can not use the Empirical Rule to describe this data set. Because it's not mound-shaped.
+
+> q.Construct
+
+> r.Construct
+
+## z-scores of largest and smallest observations
+
+> Smallest observation z-score: `r (men.sysbp.max - men.sysbp.mean) / men.sysbp.std`
+>
+> Largest observation z-score: `r (men.sysbp.max - men.sysbp.mean) / men.sysbp.std`
+
+*3 -* WOMEN SYSTOLIC BLOOD PRESSURE
+
+```{r WOMEN - SYSBP}
+women.sysbp.sorted <- sort(women.sysbp)
+women.sysbp.mean <- mean(women.sysbp)
+women.sysbp.most.frequent.value <- Mode(women.sysbp)
+women.sysbp.most.frequent.value.count <- length(dataSet[which(dataSet$SYSBP == women.sysbp.most.frequent.value),]['SYSBP'][, 1])
+women.sysbp.median <- median(women.sysbp)
+women.sysbp.max <- max(women.sysbp)
+women.sysbp.min <- min(women.sysbp)
+women.sysbp.sum <- sum(women.sysbp)
+women.sysbp.std <- sd(women.sysbp, na.rm = FALSE)
+women.sysbp.fiveNumbersSumy <- quantile(women.sysbp)
+women.sysbp.lowerQuartile <- women.sysbp.fiveNumbersSumy[2]
+women.sysbp.upperQuartile <- women.sysbp.fiveNumbersSumy[4]
+women.sysbp.interQuartile <- women.sysbp.upperQuartile - women.sysbp.lowerQuartile
+women.sysbp.variance <- women.sysbp.std^2
+women.sysbp.range <- women.sysbp.max - women.sysbp.min
+women.sysbp.range.over.std <- women.sysbp.range / women.sysbp.std
+women.sysbp.largest.zscore <- (women.sysbp.max - women.sysbp.mean) / women.sysbp.std
+women.sysbp.smallest.zscore <- (women.sysbp.min - women.sysbp.mean) / women.sysbp.std
+```
+
+Sorted: `r women.sysbp.sorted`
+
+Mean, 𝑥̅: `r women.sysbp.mean`
+
+Variance, s^2: `r women.sysbp.variance`
+
+Standard deviation, s: `r women.sysbp.std`
+
+Lower Quartile: `r sprintf("Lower Quartile: %f", women.sysbp.lowerQuartile)`
+
+Upper Quartile: `r sprintf("Upper Quartile: %f", women.sysbp.upperQuartile)`
+
+Min value: `r sprintf("Min value: %f", women.sysbp.min)`
+
+Max value: `r sprintf("Max value: %f", women.sysbp.max)`
+
+Range: `r women.sysbp.range`
+
+The range is approximately `r women.sysbp.range.over.std` standard deviations
+
+Median: `r women.sysbp.median`
+
+IQR: `r women.sysbp.interQuartile`
+
+Five-number summaries: `r women.sysbp.fiveNumbersSumy`
+
+### Box Plot
+
+### Stem Plot
+
+```{r echo=FALSE}
+stem(women.sysbp)
+```
+
+### Histograms
+
+```{r echo=FALSE}
+hist(women.sysbp, breaks = 5, col = "blue", density = 20, main = "5 Subinterval Histogram", labels = FALSE)
+```
+
+```{r echo=FALSE}
+hist(women.sysbp, breaks = 10, col = "green", density = 15, main = "10 Subinterval Histogram", labels = FALSE)
+```
+
+> Description
+
+### Dotplot
+
+```{r echo=FALSE}
+ggplot(data.frame(women.sysbp), aes(x = women.sysbp)) +
+  geom_dotplot(binaxis = 'x', stackdir = 'up', binwidth = length(women.sysbp) / women.sysbp.most.frequent.value.count - 1, method = "dotdensity") +
+  scale_y_continuous(name = NULL, breaks = NULL)
+```
+
+> The data is not mound shaped.
+
+***
+
+> We can not use the Tchebysheff’s Theorem to describe this data set. Because the set of measurement is skewed. The shape is skewed-right.
+
+> We can not use the Empirical Rule to describe this data set. Because it's not mound-shaped.
+
+> q.Construct
+
+> r.Construct
+
+## z-scores of largest and smallest observations
+
+> Smallest observation z-score: `r (women.sysbp.max - women.sysbp.mean) / women.sysbp.std`
+>
+> Largest observation z-score: `r (women.sysbp.max - women.sysbp.mean) / women.sysbp.std`
+
+*3 -* WOMEN DIASTOLIC BLOOD PRESSURE
+
+```{r WOMEN - DIASBP}
+women.diasbp.sorted <- sort(women.diasbp)
+women.diasbp.mean <- mean(women.diasbp)
+women.diasbp.most.frequent.value <- Mode(women.diasbp)
+women.diasbp.most.frequent.value.count <- length(dataSet[which(dataSet$DIASBP == men.diasbp.most.frequent.value),]['DIASBP'][, 1])
+women.diasbp.median <- median(women.diasbp)
+women.diasbp.max <- max(women.diasbp)
+women.diasbp.min <- min(women.diasbp)
+women.diasbp.sum <- sum(women.diasbp)
+women.diasbp.std <- sd(women.diasbp, na.rm = FALSE)
+women.diasbp.fiveNumbersSumy <- quantile(women.diasbp)
+women.diasbp.lowerQuartile <- women.diasbp.fiveNumbersSumy[2]
+women.diasbp.upperQuartile <- women.diasbp.fiveNumbersSumy[4]
+women.diasbp.interQuartile <- women.diasbp.upperQuartile - women.diasbp.lowerQuartile
+women.diasbp.variance <- women.diasbp.std^2
+women.diasbp.range <- women.diasbp.max - women.diasbp.min
+women.diasbp.range.over.std <- women.diasbp.range / women.diasbp.std
+women.diasbp.largest.zscore <- (women.diasbp.max - women.diasbp.mean) / women.diasbp.std
+women.diasbp.smallest.zscore <- (women.diasbp.min - women.diasbp.mean) / women.diasbp.std
+```
+
+Sorted: `r women.diasbp.sorted`
+
+Mean, 𝑥̅: `r women.diasbp.mean`
+
+Variance, s^2: `r women.diasbp.variance`
+
+Standard deviation, s: `r women.diasbp.std`
+
+Lower Quartile: `r sprintf("Lower Quartile: %d", women.diasbp.lowerQuartile)`
+
+Upper Quartile: `r sprintf("Upper Quartile: %d", women.diasbp.upperQuartile)`
+
+Min value: `r sprintf("Min value: %d", women.diasbp.min)`
+
+Max value: `r sprintf("Max value: %d", women.diasbp.max)`
+
+Range: `r women.diasbp.range`
+
+The range is approximately `r women.diasbp.range.over.std` standard deviations
+
+Median: `r women.diasbp.median`
+
+IQR: `r women.diasbp.interQuartile`
+
+Five-number summaries: `r women.diasbp.fiveNumbersSumy`
+
+### Box Plot
+
+### Stem Plot
+
+```{r echo=FALSE}
+stem(women.diasbp)
+```
+
+### Histograms
+
+```{r echo=FALSE}
+hist(women.diasbp, breaks = 5, col = "blue", density = 20, main = "5 Subinterval Histogram", labels = FALSE)
+```
+
+```{r echo=FALSE}
+hist(women.diasbp, breaks = 10, col = "green", density = 15, main = "10 Subinterval Histogram", labels = FALSE)
+```
+
+> Description
+
+### Dotplot
+
+```{r echo=FALSE}
+ggplot(data.frame(women.diasbp), aes(x = women.diasbp)) +
+  geom_dotplot(binaxis = 'x', stackdir = 'up', binwidth = length(women.diasbp) / women.diasbp.most.frequent.value.count - 1, method = "dotdensity") +
+  scale_y_continuous(name = NULL, breaks = NULL)
+```
+
+> The data is not mound shaped.
+
+***
+
+> We can not use the Tchebysheff’s Theorem to describe this data set. Because the set of measurement is skewed. The shape is skewed-right.
+
+> We can not use the Empirical Rule to describe this data set. Because it's not mound-shaped.
+
+> q.Construct
+
+> r.Construct
+
+## z-scores of largest and smallest observations
+
+> Smallest observation z-score: `r (women.sysbp.max - women.sysbp.mean) / women.sysbp.std`
+>
+> Largest observation z-score: `r (women.sysbp.max - women.sysbp.mean) / women.sysbp.std`
+
