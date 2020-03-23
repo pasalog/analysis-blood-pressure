@@ -1,5 +1,5 @@
 ---
-title: "STAT253 – Homework#1"
+title: "Statictical Analysis of sample blood pressure dataset"
 author: Çağatay USLU - 150113030
 date: 21.03.2020
 output: word_document
